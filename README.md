@@ -30,7 +30,7 @@ The project lives in its own folder and is described under [Project](#project).
 |------|---------|-----------|
 | JDK | 17 or newer | everything |
 | MySQL | 8.x | experiments 2 and 3 |
-| Maven | 3.8 or newer | experiments 6 and 7 |
+| Maven | 3.8 or newer | experiments 6 and 7, and the project |
 | Apache Tomcat | 10.1 or newer | experiments 6 and 7 |
 
 Tomcat 10.1 is the first release that uses the `jakarta.*` namespace, which is what experiments 6 and 7 are written against. Tomcat 9 will not run them.
@@ -174,8 +174,26 @@ Submit with fields blank to see per-field validation and the form repopulating i
 
 ## Project
 
-<!-- Replace this section once the project folder is added. -->
-The term project will be added in its own folder at the repository root, with the source, database script, and its own `README.md`.
+[`Project-Pulse-Group-Chat`](Project-Pulse-Group-Chat) is the term project: a multithreaded group chat on a raw TCP socket, with a JavaFX client and a server window that shows the live log and who is connected.
+
+| Part | What it does |
+|---|---|
+| Server | `ChatServer` accepts connections and keeps one thread per client |
+| Client | `ChatClient` runs a reader thread and passes messages to the JavaFX layer |
+| Protocol | UTF frames, first field is the type, fields separated by `0x1F` |
+| Build | Maven, JavaFX 21 from Maven Central (no SDK to install) |
+| Tests | 10 JUnit tests, 5 of them against a real server on an ephemeral port |
+
+Run it from that folder:
+
+```powershell
+cd Project-Pulse-Group-Chat
+.\build.bat            # once, downloads JavaFX
+.\run-server.bat       # server window, listens on port 5000
+.\run-client.bat       # one per person, or: .\run-client.bat bob
+```
+
+Clients on other machines use the server's LAN address as the host (for example `192.168.1.42`) and port `5000`. The project's own README covers the protocol, source layout and limits, and `docs/DESIGN.md` explains the interface.
 
 ---
 
@@ -205,7 +223,12 @@ The term project will be added in its own folder at the repository root, with th
 │   └── src/main/
 │       ├── java/com/lab/student/  servlet and Student bean
 │       └── webapp/             student.jsp, result.jsp
+├── Project-Pulse-Group-Chat/
+│   ├── pom.xml                 Maven build, JavaFX 21
+│   ├── src/main/java/com/pulse/   protocol, client, server, ui
+│   ├── src/test/java/com/pulse/   10 JUnit tests
+│   └── docs/                   screenshots and design notes
 └── README.md
 ```
 
-Experiments 1 to 5 are plain `javac` builds with no external build tool, so each one can be compiled and run from the command line exactly as shown above. Experiments 6 and 7 use Maven because servlets need a war file to deploy.
+Experiments 1 to 5 are plain `javac` builds with no external build tool, so each one can be compiled and run from the command line exactly as shown above. Experiments 6 and 7 use Maven because servlets need a war file to deploy. The project uses Maven because JavaFX is pulled in as a dependency instead of being installed separately.

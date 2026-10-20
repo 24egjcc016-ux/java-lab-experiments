@@ -1,0 +1,621 @@
+/*
+ * Pulse — one stylesheet for the client and the server screens.
+ *
+ * Colours are declared once on .root as looked-up colours and reused by name,
+ * the JavaFX equivalent of CSS custom properties.
+ *
+ * The design rule: surfaces step up in luminance, colour only marks people
+ * and status, and the primary action is the single light element on screen.
+ */
+
+.root {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+
+    /* surfaces, darkest to lightest */
+    -fx-bg: #0e0f11;
+    -fx-bg-raised: #131417;
+    -fx-panel: #17181c;
+    -fx-surface: #1d1f23;
+    -fx-surface-hover: #24262b;
+    -fx-code-bg: #101114;
+
+    /* ink */
+    -fx-ink: #eceef0;
+    -fx-ink-body: #c6cbd1;
+    -fx-ink-muted: #8f959d;
+    -fx-ink-subtle: #7a8089;
+
+    /* hairlines */
+    -fx-line: rgba(255, 255, 255, 0.08);
+    -fx-line-strong: rgba(255, 255, 255, 0.14);
+    -fx-focus-ring: rgba(255, 255, 255, 0.32);
+
+    /* the one light element: the primary button */
+    -fx-primary-bg: #e8eaed;
+    -fx-primary-ink: #121316;
+
+    /* status */
+    -fx-success: #4cb782;
+    -fx-danger: #e5484d;
+    -fx-danger-ink: #f0999c;
+
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+/* ---------------------------------------------------------------- shared */
+
+.app-frame {
+    -fx-background-color: -fx-bg;
+    -fx-border-color: rgba(255, 255, 255, 0.10);
+    -fx-border-width: 1;
+}
+
+.titlebar {
+    -fx-background-color: -fx-bg-raised;
+    -fx-border-color: transparent transparent -fx-line transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 0 8 0 14;
+}
+
+.title-brand {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-ink;
+}
+
+.title-separator {
+    -fx-font-size: 11px;
+    -fx-text-fill: -fx-ink-subtle;
+}
+
+.title-context {
+    -fx-font-size: 11.5px;
+    -fx-text-fill: -fx-ink-muted;
+}
+
+.window-button {
+    -fx-min-width: 34;
+    -fx-min-height: 28;
+    -fx-pref-width: 34;
+    -fx-pref-height: 28;
+    -fx-background-color: transparent;
+    -fx-background-radius: 4;
+    -fx-text-fill: -fx-ink-muted;
+    -fx-font-size: 13px;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+.window-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.06);
+    -fx-text-fill: -fx-ink;
+}
+
+.window-close:hover {
+    -fx-background-color: rgba(229, 72, 77, 0.85);
+    -fx-text-fill: white;
+}
+
+.app-bg {
+    -fx-background-color: -fx-bg;
+}
+
+.field-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: -fx-ink-muted;
+}
+
+.hint-text {
+    -fx-font-size: 11px;
+    -fx-text-fill: -fx-ink-subtle;
+}
+
+.error-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: -fx-danger-ink;
+}
+
+.text-field {
+    -fx-background-color: -fx-surface;
+    -fx-background-radius: 6;
+    -fx-border-color: -fx-line;
+    -fx-border-radius: 6;
+    -fx-border-width: 1;
+    -fx-text-fill: -fx-ink;
+    -fx-prompt-text-fill: -fx-ink-subtle;
+    -fx-padding: 10 12;
+    -fx-font-size: 13px;
+}
+
+.text-field:focused {
+    -fx-border-color: -fx-focus-ring;
+}
+
+.button-primary {
+    -fx-background-color: -fx-primary-bg;
+    -fx-background-radius: 6;
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-text-fill: -fx-primary-ink;
+    -fx-font-weight: bold;
+    -fx-font-size: 12.5px;
+    -fx-padding: 10 16;
+    -fx-cursor: hand;
+}
+
+.button-primary:hover {
+    -fx-background-color: #ffffff;
+}
+
+.button-primary:focused {
+    -fx-border-color: rgba(255, 255, 255, 0.45);
+}
+
+.button-primary:disabled {
+    -fx-opacity: 0.5;
+}
+
+.button-ghost {
+    -fx-background-color: transparent;
+    -fx-background-radius: 6;
+    -fx-border-color: -fx-line-strong;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-text-fill: -fx-ink-body;
+    -fx-font-size: 12px;
+    -fx-padding: 7 14;
+    -fx-cursor: hand;
+}
+
+.button-ghost:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-text-fill: -fx-ink;
+}
+
+.button-ghost:focused {
+    -fx-border-color: -fx-focus-ring;
+}
+
+.button-ghost:disabled {
+    -fx-opacity: 0.5;
+}
+
+.button-quiet {
+    -fx-background-color: transparent;
+    -fx-background-radius: 6;
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-text-fill: -fx-ink-muted;
+    -fx-font-size: 12px;
+    -fx-padding: 6 10;
+    -fx-cursor: hand;
+}
+
+.button-quiet:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-text-fill: -fx-ink;
+}
+
+.button-quiet:focused {
+    -fx-border-color: -fx-focus-ring;
+}
+
+/* ---------------------------------------------------------------- login */
+
+.login-card {
+    -fx-background-color: -fx-panel;
+    -fx-background-radius: 10;
+    -fx-border-color: -fx-line;
+    -fx-border-radius: 10;
+    -fx-padding: 28;
+}
+
+.login-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-ink;
+}
+
+.login-sub {
+    -fx-font-size: 12px;
+    -fx-text-fill: -fx-ink-muted;
+}
+
+/* ---------------------------------------------------------------- chat */
+
+.chat-root {
+    -fx-background-color: -fx-bg;
+}
+
+.chat-main {
+    -fx-background-color: -fx-bg;
+}
+
+.chat-header {
+    -fx-background-color: -fx-bg-raised;
+    -fx-border-color: transparent transparent -fx-line transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 0 16;
+    -fx-min-height: 56;
+    -fx-pref-height: 56;
+}
+
+.channel-name {
+    -fx-font-size: 13.5px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-ink;
+}
+
+.channel-subtitle {
+    -fx-font-size: 11px;
+    -fx-text-fill: -fx-ink-muted;
+}
+
+.status-indicator {
+    -fx-padding: 0 2;
+}
+
+.status-dot {
+    -fx-fill: -fx-success;
+}
+
+.status-text {
+    -fx-font-size: 11.5px;
+    -fx-text-fill: -fx-ink-muted;
+}
+
+.status-indicator.offline .status-dot {
+    -fx-fill: -fx-danger;
+}
+
+.status-indicator.offline .status-text {
+    -fx-text-fill: -fx-danger-ink;
+}
+
+.status-indicator.stopped .status-dot {
+    -fx-fill: -fx-ink-subtle;
+}
+
+.status-indicator.stopped .status-text {
+    -fx-text-fill: -fx-ink-subtle;
+}
+
+.banner {
+    -fx-background-color: rgba(229, 72, 77, 0.10);
+    -fx-text-fill: -fx-danger-ink;
+    -fx-font-size: 11.5px;
+    -fx-padding: 8 16;
+}
+
+.message-scroll,
+.sidebar-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.message-scroll > .viewport,
+.sidebar-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.messages {
+    -fx-padding: 6 0 12 0;
+}
+
+.message-row {
+    -fx-padding: 8 16 3 16;
+    -fx-background-radius: 6;
+}
+
+.message-row.grouped {
+    -fx-padding: 0 16 3 16;
+}
+
+.message-row:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.02);
+}
+
+.message-author {
+    -fx-font-size: 12.5px;
+    -fx-font-weight: bold;
+}
+
+.message-time {
+    -fx-font-size: 10px;
+    -fx-text-fill: -fx-ink-subtle;
+}
+
+.message-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-ink-body;
+}
+
+.system-note {
+    -fx-font-size: 11px;
+    -fx-text-fill: -fx-ink-subtle;
+    -fx-padding: 4 0 7 0;
+}
+
+.empty-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-ink;
+}
+
+.empty-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: -fx-ink-muted;
+    -fx-text-alignment: center;
+}
+
+/* ---------------------------------------------------------------- composer */
+
+.composer {
+    -fx-background-color: -fx-bg-raised;
+    -fx-border-color: -fx-line transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 12 16 14 16;
+}
+
+.composer-box {
+    -fx-background-color: -fx-surface;
+    -fx-background-radius: 8;
+    -fx-border-color: -fx-line;
+    -fx-border-radius: 8;
+    -fx-padding: 4 6 4 10;
+}
+
+.composer-input {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-text-fill: -fx-ink;
+    -fx-prompt-text-fill: -fx-ink-subtle;
+    -fx-font-size: 13px;
+    -fx-padding: 7 0 7 0;
+}
+
+.composer-input .content {
+    -fx-background-color: transparent;
+}
+
+.composer-input:focused {
+    -fx-background-color: transparent;
+}
+
+.composer-input:disabled {
+    -fx-opacity: 0.55;
+}
+
+.composer-input .scroll-pane,
+.composer-input .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ---------------------------------------------------------------- sidebar */
+
+.sidebar {
+    -fx-background-color: -fx-bg-raised;
+    -fx-border-color: transparent transparent transparent -fx-line;
+    -fx-border-width: 0 0 0 1;
+    -fx-padding: 12 8;
+    -fx-spacing: 12;
+}
+
+.sidebar-title {
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-ink-subtle;
+    -fx-padding: 0 6;
+}
+
+.sidebar-count {
+    -fx-font-size: 11px;
+    -fx-text-fill: -fx-ink-muted;
+    -fx-padding: 0 6;
+}
+
+.user-list {
+    -fx-spacing: 1;
+}
+
+.user-row {
+    -fx-padding: 5 6;
+    -fx-background-radius: 6;
+}
+
+.user-row:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.03);
+}
+
+.user-row-name {
+    -fx-font-size: 12.5px;
+    -fx-text-fill: -fx-ink-body;
+}
+
+.you-tag {
+    -fx-font-size: 10.5px;
+    -fx-text-fill: -fx-ink-subtle;
+}
+
+.profile {
+    -fx-border-color: -fx-line transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 12 6 0 6;
+}
+
+.profile-name {
+    -fx-font-size: 12.5px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-ink;
+}
+
+/* ---------------------------------------------------------------- avatars */
+
+.avatar-initials {
+    -fx-font-weight: bold;
+}
+
+/*
+ * One muted colour per person. The circle takes a faint tint of it, the
+ * initials and the name in the message list take the colour itself.
+ */
+.user-0 {
+    -fx-fill: rgba(217, 160, 91, 0.16);
+    -fx-text-fill: #d9a05b;
+}
+
+.user-1 {
+    -fx-fill: rgba(111, 159, 216, 0.16);
+    -fx-text-fill: #6f9fd8;
+}
+
+.user-2 {
+    -fx-fill: rgba(125, 187, 142, 0.16);
+    -fx-text-fill: #7dbb8e;
+}
+
+.user-3 {
+    -fx-fill: rgba(217, 138, 148, 0.16);
+    -fx-text-fill: #d98a94;
+}
+
+.user-4 {
+    -fx-fill: rgba(167, 149, 207, 0.16);
+    -fx-text-fill: #a795cf;
+}
+
+.user-5 {
+    -fx-fill: rgba(111, 181, 173, 0.16);
+    -fx-text-fill: #6fb5ad;
+}
+
+.user-6 {
+    -fx-fill: rgba(170, 176, 106, 0.16);
+    -fx-text-fill: #aab06a;
+}
+
+.user-7 {
+    -fx-fill: rgba(152, 162, 173, 0.16);
+    -fx-text-fill: #98a2ad;
+}
+
+/* ---------------------------------------------------------------- server */
+
+.server-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-ink;
+}
+
+.server-subtitle {
+    -fx-font-size: 11.5px;
+    -fx-text-fill: -fx-ink-muted;
+}
+
+.panel {
+    -fx-background-color: -fx-panel;
+    -fx-background-radius: 8;
+    -fx-border-color: -fx-line;
+    -fx-border-radius: 8;
+}
+
+.panel-title {
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-ink-subtle;
+}
+
+.stat-row {
+    -fx-padding: 2 2 4 2;
+}
+
+.stat-cell {
+    -fx-spacing: 2;
+}
+
+.stat-divider {
+    -fx-background-color: -fx-line;
+    -fx-min-width: 1;
+    -fx-pref-width: 1;
+    -fx-max-width: 1;
+    -fx-min-height: 6;
+    -fx-pref-height: 30;
+    -fx-max-height: 30;
+}
+
+.stat-value {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-ink;
+}
+
+.stat-label {
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-ink-subtle;
+}
+
+.log-view {
+    -fx-font-family: "Consolas";
+    -fx-font-size: 11.5px;
+    -fx-text-fill: #a9b0b8;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.log-view .content {
+    -fx-background-color: -fx-code-bg;
+    -fx-background-radius: 6;
+    -fx-padding: 10 12;
+}
+
+.log-view .scroll-pane,
+.log-view .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ---------------------------------------------------------------- scrollbars */
+
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 8;
+}
+
+.scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-pref-height: 8;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: rgba(255, 255, 255, 0.10);
+    -fx-background-radius: 4;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.18);
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-pref-height: 0;
+    -fx-pref-width: 0;
+    -fx-padding: 0;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
