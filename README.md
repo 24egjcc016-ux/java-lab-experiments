@@ -3,7 +3,7 @@
 Lab experiments for the Advanced Java course, plus the term project.
 
 
-**Student:** `<Prince Sharma>`
+**Student:** `Prince Sharma`
 **Enrollment:** `24EGJCC016`
 
 ---
