@@ -2,8 +2,8 @@
 
 Lab experiments for the Advanced Java course, plus the term project.
 
-<!-- Fill these two lines in before submitting. -->
-**Student:** `<your name>`
+
+**Student:** `<Prince Sharma>`
 **Enrollment:** `24EGJCC016`
 
 ---
